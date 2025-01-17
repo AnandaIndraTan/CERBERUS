@@ -134,3 +134,13 @@ class ParserHead():
         except Exception as e:
             print(f"ERROR in parsing: {str(e)}")
             return ReturnTemplate(result=[]).model_dump()
+
+
+class RAGHead():
+
+    def __init__(self, credential: str, config: dict, prompt: str):
+        with open(credential, "r") as f:
+            self.token = json.load(f)["token"]
+        self.llm_config = config["LLM"]
+        self.embedding_config = config["RAG"]
+        self.prompt = prompt

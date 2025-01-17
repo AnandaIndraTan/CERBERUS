@@ -11,3 +11,7 @@ model = "deepseek-chat"
 [Suite_config]
 tool_list = ["nmap", "nikto"]
 tool_instruct_path = "tool_instruct"
+
+[RAG]
+api_url = ""
+embeddings = ""
