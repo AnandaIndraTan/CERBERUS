@@ -12,3 +12,9 @@ The project is currently in the Alpha stage, focusing on establishing core recon
 - Domain/Sub-domain Discovery
 - Service/Port Enumeration
 - Exploitable Vulnerability Scanning
+
+
+## Roadmap
+- [x] Project CERBERUS
+- [ ] Project INFERNO
+- [ ] Project KRANION
