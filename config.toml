@@ -1,0 +1,13 @@
+[PenTest_Config]
+scan_all_port = false
+use_invasive_methodology = false
+scan_only_online = true
+max_wait_time = 100000000
+
+[LLM]
+api_url = "https://api.deepseek.com"
+model = "deepseek-chat"
+
+[Suite_config]
+tool_list = ["nmap", "nikto"]
+tool_instruct_path = "tool_instruct"

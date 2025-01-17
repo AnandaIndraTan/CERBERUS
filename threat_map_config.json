@@ -1,0 +1,63 @@
+{
+    "node_type": [
+        "Host", 
+        "IPAddress", 
+        "Port", 
+        "Service", 
+        "Vulnerability"
+    ],
+    "schema_mapping": {
+        "Host": {
+            "constraints": "name",
+            "relationships": {
+                "IPAddress": {
+                    "type": "RESOLVES_TO",
+                    "index_prop": "last_seen",
+                    "default_props": {
+                        "resolution_type": "A"
+                    }
+                }
+            }
+        },
+        "IPAddress": {
+            "constraints": "address",
+            "relationships": {
+                "Port": {
+                    "type": "HOSTS",
+                    "index_prop": "status",
+                    "default_props": {
+                        "status": "open"
+                    }
+                }
+            }
+        },
+        "Port": {
+            "constraints": ["number", "protocol"],
+            "relationships": {
+                "Service": {
+                    "type": "RUNS",
+                    "index_prop": "status",
+                    "default_props": {
+                        "status": "running"
+                    }
+                }
+            }
+        },
+        "Service": {
+            "constraints": ["name", "version"],
+            "relationships": {
+                "Vulnerability": {
+                    "type": "HAS_VULNERABILITY",
+                    "index_prop": "is_vulnerable",
+                    "default_props": {
+                        "detection_time": "timestamp"
+                    }
+                }
+            }
+        },
+        "Vulnerability": {
+            "constraints": ["description", "cve_id"],  
+            "relationships": {}
+        }
+    }
+}
