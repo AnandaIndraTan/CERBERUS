@@ -24,8 +24,17 @@ class ThreatMap:
             self.schema_mapping = schema["schema_mapping"]
 
     def _dict_to_props(self, props: Dict) -> str:
-        props_list = [f"{k}: '{v}'" if isinstance(v, str) else f"{k}: {v}" 
-                     for k, v in props.items()]
+        props_list = []
+        for k, v in props.items():
+            if v is None:
+                props_list.append(f'{k}: null')
+            elif isinstance(v, str):
+                # Use double quotes for string values containing apostrophes
+                props_list.append(f'{k}: "{v}"')
+            elif isinstance(v, bool):
+                props_list.append(f'{k}: {str(v).lower()}')
+            else:
+                props_list.append(f'{k}: {v}')
         return "{" + ", ".join(props_list) + "}"
 
     def generate_constraint(self, label: str, constraints: Union[str, List[str]]) -> str:
@@ -124,7 +133,7 @@ class ThreatMap:
                     "cvss": vuln["cvss"],
                     "is_vulnerable": vuln["is_vulnerable"]
                 }
-                if vuln["cve_id"]:  # Add CVE ID if it exists
+                if vuln.get("cve_id"):  # Using .get() instead of direct access
                     vuln_data["cve_id"] = vuln["cve_id"]
 
                 self.create_relationship(

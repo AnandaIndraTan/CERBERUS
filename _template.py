@@ -23,7 +23,6 @@ class ScanResult(TypedDict):
     host: Annotated[str, "The Host/Domain address of the host"]
     ip: Annotated[str, "The IP address of the host"]
     ports: Annotated[List[Port], "List of open ports and their details"]
-    AttackVector: Annotated[List[str], "The list of attack vectors"]
 
 class ScanResultTemplate(TypedDict):
     command: Annotated[str, "The command executed"]
