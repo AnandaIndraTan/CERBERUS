@@ -2,7 +2,7 @@
 scan_all_port = false
 use_invasive_methodology = false
 scan_only_online = true
-max_wait_time = 10000
+max_wait_time = 1000
 
 [LLM]
 api_url = "https://api.deepseek.com"

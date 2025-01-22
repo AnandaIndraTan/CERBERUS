@@ -32,7 +32,7 @@
             }
         },
         "Port": {
-            "constraints": ["number", "protocol"],
+            "constraints": [],
             "relationships": {
                 "Service": {
                     "type": "RUNS",

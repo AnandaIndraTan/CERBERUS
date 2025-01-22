@@ -13,16 +13,15 @@ from threatmap import ThreatMap
 
 
 
-
 class Suite:
     def __init__(self, credential:str, threat_map_config:str, config_path: str, prompt: str, logging_level: str = "INFO"):
         self.config = toml.load(config_path)
         self.list_of_tools = self.config["Suite_config"]["tool_list"] + ["FINISH"]
         self.prompt = prompt
         self.credential = credential
+        self.verbose = logging_level
         self.parser = ParserHead(credential, self.config)
         self.threat_map = ThreatMap(threat_map_config, credential)
-        self.verbose = logging_level
 
         self.logger = logging.getLogger(__name__)
         try:
@@ -172,5 +171,7 @@ class Suite:
         self.logger.debug("=== Adding data to Threat Map ===")
         for scan_data in parsed_result["result"]:
             self.threat_map.add_entity(scan_data["result"])
-            self.threat_map.verify_data()
+            self.logger.debug("=== Verifying data in Threat Map ===")
+            verify_result = self.threat_map.verify_data()
+            self.logger.debug(f"Data verification result: {verify_result}")
         self.logger.debug("=== Data added to Threat Map ===")
