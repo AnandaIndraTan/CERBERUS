@@ -18,4 +18,5 @@ class Interface:
         self.print_interface()
         prompt = input("Enter Prompt:")
         suite = Suite(self.credential, self.threat_map_config, self.config, prompt, logging_level="DEBUG")
-        suite.run()
+        result = suite.run()
+        return result
