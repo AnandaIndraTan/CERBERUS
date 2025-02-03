@@ -23,23 +23,30 @@ class Head:
         
 
     def head_setup(self):
-        instruct_list = ", ".join([
-            f"don't {' '.join(k.split('_'))}" if isinstance(v, bool) and not v else
-            f"{' '.join(k.split('_'))}" if isinstance(v, bool) and v else
-            f"{' '.join(k.split('_'))} is {v}" if isinstance(v, (int, float)) else
+        config_instructions = [
+            f"{'do not ' if not v else ''}{' '.join(k.split('_'))}" if isinstance(v, bool) else
+            f"{' '.join(k.split('_'))} is {v} miliseconds" if isinstance(v, (int, float)) and 'time' in k else
             f"{' '.join(k.split('_'))} is {v}"
             for k, v in self.pen_test_config.items()
-        ])
+        ]
         
-        return f"""You are an expert at using {self.tool} for penetration testing.
-        {instruct_list}.
-        Time is in miliseconds.
-        Return ONLY a JSON object in this format:
-        {{
-            "command": "<the command to execute>",
-            "output": "<the output from the command>"
-        }}
-        Task: {self.prompt}"""
+        numbered_instructions = [
+            f"{i}. {instruction}"
+            for i, instruction in enumerate(config_instructions, start=4)
+        ]
+        
+        instruct_list = "\n".join(numbered_instructions)
+        
+        return f"""System Message: You are an expert at penetration testing. 
+You are assigned with a tool, {self.tool}, to perform a security scan on a target system.
+Here are important things to note:
+1. always return a valid string command
+2. do not create another file
+3. format your response as valid JSON with 'command' and 'output' fields
+4. ensure the command field contains the exact command to run
+{instruct_list}
+
+Task: {self.prompt}"""
 
     def head(self):
         llm = ChatOpenAI(
@@ -53,7 +60,8 @@ class Head:
             [shell_tool], 
             llm, 
             agent=AgentType.CHAT_ZERO_SHOT_REACT_DESCRIPTION,
-            verbose=True if self.verbose == "DEBUG" else False
+            verbose=True if self.verbose == "DEBUG" else False,
+            handle_parsing_errors=True,
         )
         result = agent.run(self.messages)
         
