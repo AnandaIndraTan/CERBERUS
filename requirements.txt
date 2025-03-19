@@ -1,0 +1,11 @@
+pydantic==2.9.2
+neo4j==5.27.0
+langchain==0.3.13
+langchain-community==0.3.13
+langchain-core==0.3.33
+langchain-openai==0.2.14
+langchain-mistralai==0.2.6
+toml==0.10.2
+langgraph==0.2.60
+fpdf==1.7.2
+docarray==0.40.0

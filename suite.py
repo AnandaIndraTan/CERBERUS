@@ -221,6 +221,7 @@ class Suite:
         )
         
         self.logger.info("Added conditional edges from supervisor")
+        workflow.set_entry_point("supervisor")
         self.logger.info("=== Workflow Created ===\n")
             
         return workflow.compile()
