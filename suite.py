@@ -3,7 +3,7 @@ import json
 import toml
 import logging
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import DocArrayInMemorySearch
+from langchain_community.vectorstores import DocArrayInMemorySearch
 from langchain.schema import Document
 from langchain.chains import RetrievalQA
 from langgraph.graph import StateGraph, END

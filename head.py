@@ -10,7 +10,7 @@ from langchain.agents import AgentType, initialize_agent
 from langchain_core.output_parsers import JsonOutputParser
 from langchain_core.prompts import PromptTemplate
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import DocArrayInMemorySearch
+from langchain_community.vectorstores import DocArrayInMemorySearch
 from langchain.schema import Document
 
 from _template import ReturnTemplate

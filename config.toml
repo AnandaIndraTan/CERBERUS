@@ -1,7 +1,7 @@
 [PenTest_Config]
 scan_all_port = false
 use_invasive_methodology = false
-scan_only_online = false
+scan_only_online = true
 max_wait_time = 1000000000
 
 
