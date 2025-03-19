@@ -4,7 +4,6 @@ from neo4j import GraphDatabase
 from datetime import datetime
 
 
-
 class ThreatMap:
     def __init__(self, config: str, credentials: str):
         self.config = config
@@ -40,8 +39,8 @@ class ThreatMap:
         return "{" + ", ".join(props_list) + "}"
 
     def generate_constraint(self, label: str, constraints: Union[str, List[str]]) -> str:
-        if not constraints:  
-            return ""  
+        if not constraints:  # If constraints is empty ([] or "")
+            return ""  # Return empty string or skip constraint creation
         
         if isinstance(constraints, list):
             return f"CREATE CONSTRAINT IF NOT EXISTS FOR (n:{label}) REQUIRE ({', '.join(f'n.{prop}' for prop in constraints)}) IS UNIQUE"
@@ -170,6 +169,103 @@ class ThreatMap:
                     to_node={"label": "Vulnerability", "properties": vuln_data},
                     schema_mapping=self.schema_mapping
                 )
+    def get_kg_data(self):
+        descriptions = []
+        
+        with self.driver.session() as session:
+            try:
+                # Host -> IP (Host requires "name" constraint, IPAddress requires "address" constraint)
+                result = session.run("""
+                    MATCH (h:Host)-[r:RESOLVES_TO]->(ip:IPAddress) 
+                    WHERE h.name IS NOT NULL AND ip.address IS NOT NULL
+                    RETURN h.name as host, ip.address as ip, 
+                        r.last_seen as last_seen, 
+                        r.resolution_type as resolution_type
+                """)
+                for record in result:
+                    try:
+                        if not record['host'] or not record['ip']:
+                            continue
+                        resolution_type = record['resolution_type'] or 'A'  # default from schema
+                        descriptions.append(
+                            f"Host {record['host']} RESOLVES_TO IP address {record['ip']} "
+                            f"(type: {resolution_type}, last seen: {record['last_seen']})"
+                        )
+                    except KeyError as e:
+                        descriptions.append(f"ERROR: Missing required property in Host->IP relationship: {e}")
+
+                # IP -> Port (Port has no constraints in schema)
+                result = session.run("""
+                    MATCH (ip:IPAddress)-[r:HOSTS]->(p:Port) 
+                    WHERE ip.address IS NOT NULL
+                    RETURN ip.address as ip, p.number as port, p.protocol as protocol, 
+                        r.status as status, r.last_seen as last_seen
+                """)
+                for record in result:
+                    try:
+                        if not record['ip'] or not record['port']:
+                            continue
+                        status = record['status'] or 'open'  # default from schema
+                        descriptions.append(
+                            f"IP {record['ip']} HOSTS port {record['port']}"
+                            f"{f'/{record['protocol']}' if record['protocol'] else ''} "
+                            f"(status: {status})"
+                        )
+                    except KeyError as e:
+                        descriptions.append(f"ERROR: Missing required property in IP->Port relationship: {e}")
+
+                # Port -> Service (Service requires "name" and "version" constraints)
+                result = session.run("""
+                    MATCH (p:Port)-[r:RUNS]->(s:Service) 
+                    WHERE s.name IS NOT NULL AND s.version IS NOT NULL
+                    RETURN p.number as port, p.ip_address as ip, s.name as service, 
+                        s.version as version, r.status as status
+                """)
+                for record in result:
+                    try:
+                        if not record['service'] or not record['version']:
+                            continue
+                        status = record['status'] or 'running'  # default from schema
+                        descriptions.append(
+                            f"Port {record['port']}"
+                            f"{f' on {record['ip']}' if record['ip'] else ''} "
+                            f"RUNS {record['service']} version {record['version']} "
+                            f"(status: {status})"
+                        )
+                    except KeyError as e:
+                        descriptions.append(f"ERROR: Missing required property in Port->Service relationship: {e}")
+
+                # Service -> Vulnerability (Vulnerability requires "description" and "cve_id" constraints)
+                result = session.run("""
+                    MATCH (s:Service)-[r:HAS_VULNERABILITY]->(v:Vulnerability) 
+                    WHERE s.name IS NOT NULL AND s.version IS NOT NULL 
+                    AND v.description IS NOT NULL AND v.cve_id IS NOT NULL
+                    RETURN s.name as service, s.version as version, 
+                        v.description as description, v.cvss as cvss, 
+                        v.cve_id as cve_id, r.detection_time as detection_time,
+                        r.is_vulnerable as is_vulnerable
+                """)
+                for record in result:
+                    try:
+                        if not record['service'] or not record['description'] or not record['cve_id']:
+                            continue
+                        descriptions.append(
+                            f"Service {record['service']} (version {record['version']}) "
+                            f"HAS_VULNERABILITY {record['cve_id']}: {record['description']} "
+                            f"(CVSS: {record['cvss'] if record['cvss'] else 'N/A'}, "
+                            f"detected: {record['detection_time'] if record['detection_time'] else 'unknown'})"
+                        )
+                    except KeyError as e:
+                        descriptions.append(f"ERROR: Missing required property in Service->Vulnerability relationship: {e}")
+
+            except Exception as e:
+                return f"ERROR: Failed to retrieve graph data: {str(e)}"
+
+            if not descriptions:
+                return "No valid relationships found in the graph."
+
+        return "\n".join(descriptions)
+
 
     def verify_data(self):
         with self.driver.session() as session:

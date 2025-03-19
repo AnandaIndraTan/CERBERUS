@@ -1,6 +1,7 @@
-from typing import Annotated, TypedDict, List, Dict, NotRequired, Any
+from typing import Annotated, TypedDict, List, NotRequired
 from pydantic import BaseModel, Field
 from dataclasses import dataclass
+
 
 
 class Vulnerability(TypedDict):
@@ -23,6 +24,7 @@ class ScanResult(TypedDict):
     host: Annotated[str, "The Host/Domain address of the host"]
     ip: Annotated[str, "The IP address of the host"]
     ports: Annotated[List[Port], "List of open ports and their details"]
+    AttackVector: Annotated[List[str], "The list of attack vectors"]
 
 class ScanResultTemplate(TypedDict):
     command: Annotated[str, "The command executed"]
@@ -31,17 +33,10 @@ class ScanResultTemplate(TypedDict):
 class ReturnTemplate(BaseModel):
     result: List[ScanResultTemplate] = Field(description="Result of each tool execution")
 
-
-class ToolOutput(TypedDict):
-    command: str
-    output: str
-
-class Results(TypedDict):
-    tool_name: Dict[str, Any]
-
 @dataclass
 class AgentState:
     prompt: str
-    results: Results
+    results: str
+    used_tools: List[str]
     current: str
     next: str

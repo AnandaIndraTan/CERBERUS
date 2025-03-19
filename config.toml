@@ -1,17 +1,25 @@
 [PenTest_Config]
 scan_all_port = false
 use_invasive_methodology = false
-scan_only_online = true
-max_wait_time = 10000000
+scan_only_online = false
+max_wait_time = 1000000000
+
 
 [LLM]
-api_url = "https://api.deepseek.com"
-model = "deepseek-chat"
+distribution = "mistral"
+api_url = "https://api.mistral.ai/v1/"
+model = "codestral-latest"
+
+[Embedding]
+distribution = "jina" 
+model = "jina-clip-v2"
 
 [Suite_config]
 tool_list = ["nmap", "nikto"]
-tool_instruct_path = "tool_instruct"
 
-[RAG]
-api_url = ""
-embeddings = ""
+[Report_Format]
+security_benchmark = "compliance_benchmark/OWASP TOP 10.pdf"
+report_folder_location = "results/"
+
+[Debugging]
+state = true
