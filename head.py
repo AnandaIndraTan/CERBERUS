@@ -81,7 +81,7 @@ class Head:
     1. Wait for actual command output before making observations
     2. NEVER fabricate or imagine scan results
     3. Only analyze the exact output provided by the tool
-    4. If a command fails, acknowledge the failure and suggest corrections
+    4. If a command fails, never proceed with the analysis
     5. DO NOT make assumptions about what the scan might find
     6. Report exactly what is in the output, nothing more
 
@@ -140,14 +140,34 @@ class Head:
             if self.debugging:
                 self.logger.debug(f"Retrieved {len(findings)} unique findings, generating analysis")
                 
-            analysis = self.llm.invoke(
-                f"""Security Scan result of {self.tool}:
-                {findings}
-                
-                List out all {", ".join(queries)} in the scan result.
-                Format as a clear list of findings.
-                """
-            )
+            analysis_prompt = f"""Security Scan result of {self.tool}:
+            {findings}
+            
+            List out all findings related to these categories from the scan result:
+            - IP addresses
+            - Hostnames
+            - Services
+            - Ports
+            - Protocols
+            - Subdomain or hidden path discovery
+            - Critical vulnerabilities and exploitable findings
+            - High-risk security issues and weaknesses
+            - Security configuration problems
+            - Authentication and access control vulnerabilities
+            - Injection vulnerabilities and exploits
+            - Potential sensitive data exposure
+            
+            IMPORTANT RULES:
+            1. ONLY report findings that are EXPLICITLY present in the scan output.
+            2. If no information is found for a category, write "None detected" for that category.
+            3. DO NOT create example or hypothetical data.
+            4. DO NOT explain what information "might" look like.
+            5. DO NOT fabricate or imagine potential vulnerabilities.
+            6. NEVER include a "Conclusion" or "Example" section.
+            7. Format your response as a clear list of actual findings only.
+            8. If the scan was incomplete or interrupted, only report what was actually found.
+            """
+            analysis = self.llm.invoke(analysis_prompt)
             
             return analysis.content
 
@@ -303,6 +323,9 @@ class ParserHead():
                 2. All actual hostnames mentioned in the scan results
                 3. All actual services and ports found in the scan results
                 4. All actual vulnerabilities identified in the scan results
+
+                These are the cases to handle:
+                1. If found multiple IP with the same host, separate them into different objects.
 
                 If certain information is not present in the text, indicate it as "Not found in scan results".
                 IMPORTANT: Only include IP addresses and hosts that are explicitly identified in the scan results.
