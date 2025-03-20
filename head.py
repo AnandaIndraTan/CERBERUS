@@ -55,7 +55,6 @@ class Head:
             
         config_instructions = [
             f"{'do not ' if not v else ''}{' '.join(k.split('_'))}" if isinstance(v, bool) else
-            f"{' '.join(k.split('_'))} is {v} miliseconds" if isinstance(v, (int, float)) and 'time' in k else
             f"{' '.join(k.split('_'))} is {v}"
             for k, v in self.pen_test_config.items()
         ]
