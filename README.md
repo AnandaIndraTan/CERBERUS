@@ -2,9 +2,8 @@
 The project name is inspired by the Ancient Greek Mythology, Cerberus. It was told that Cerberus is the multi-headed dog of Hades that guards the gate of Hell to prevent the dead from leaving. This project, aims to embody the myth in the realm of Cybersecurity, where the primary objective is to make system vulnerabilities spotted (k̑érberos), ensuring no known vulnerabilities leave into the world and causing havoc.
 
 ## About The Project
-
-Cerberus is a penetration testing agent that leverages multi-agent LLM architecture to perform simulated red team operations. The project aims to assist the process of security penetration testing through agentic automation through the attack framework "Cyber Kill Chain" that was made by Lockheed Martin on 2017.
-
+Cerberus is a penetration testing agent that leverages multi-agent LLM architecture to perform simulated red team operations. The automation for penetration testing is largely inspired by the "Cyber Kill Chain" attack framework developed by Lockheed Martin in 2017. Motivated by the critical need for affordable cybersecurity solutions as digitalization accelerates, Cerberus aims to make security testing accessible to small businesses. Through realistic attack emulation, the system efficiently identifies known vulnerabilities, enabling organizations to implement targeted fixes that effectively deter lower-skilled attackers (Script Kiddies/Novice Hackers) from successfully compromising their infrastructure.
+ 
 Cerberus was initiated by Ananda Indra Tan as Final Year Project during the study in City University of Hong Kong. The project is open-source and welcome for community development.
 
 ## Environment Setup to Start
