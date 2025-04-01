@@ -1,10 +1,11 @@
-# CERBERUS (v-Alpha)
+# Project CERBERUS (v-Alpha)
+The project name is inspired by the Ancient Greek Mythology, Cerberus. It was told that Cerberus is the multi-headed dog of Hades that guards the gate of Hell to prevent the dead from leaving. This project, aims to embody the myth in the realm of Cybersecurity, where the primary objective is to make system vulnerabilities spotted (k̑érberos), ensuring no known vulnerabilities leave into the world and causing havoc.
 
 ## About The Project
 
-Cerberus is a penetration testing agent that leverages multi-agent LLM architecture to perform simulated red team operations. The project aims to assist the process of security penetration testing through agentic automation through the attack framework "Cyber Kill Chain" that was made by Lockheed Martin, 2017.
+Cerberus is a penetration testing agent that leverages multi-agent LLM architecture to perform simulated red team operations. The project aims to assist the process of security penetration testing through agentic automation through the attack framework "Cyber Kill Chain" that was made by Lockheed Martin on 2017.
 
-The project is open-source and welcome for community development.
+Cerberus was initiated by Ananda Indra Tan as Final Year Project during the study in City University of Hong Kong. The project is open-source and welcome for community development.
 
 ## Environment Setup to Start
 - Neo4J Desktop 1.5.9 (If Threatmap observation is desired)
@@ -20,7 +21,7 @@ The project is open-source and welcome for community development.
   </br>
   <img width="339" alt="Screenshot 2025-04-01 at 4 35 45 PM" src="https://github.com/user-attachments/assets/c6ec1e6e-a546-48f7-b921-cfb7b0eb268d" />
   </br>
-- Then, run the following `uv add -r requirements.txt` and `uv pip install -r requirements.txt`
+- Then, run `uv add -r requirements.txt` and `uv pip install -r requirements.txt`
 - Go to the Cerberus folder (the location of the entire script). Then run `uv run cerberus.py`
 
 ## Project Background, Development Details, Rationale of Design
