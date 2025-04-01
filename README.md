@@ -20,9 +20,7 @@ The project is open-source and welcome for community development.
   </br>
   <img width="339" alt="Screenshot 2025-04-01 at 4 35 45 PM" src="https://github.com/user-attachments/assets/c6ec1e6e-a546-48f7-b921-cfb7b0eb268d" />
   </br>
-- Then, run the following
-  `uv add -r requirements.txt`
-  `uv pip install -r requirements.txt`
+- Then, run the following `uv add -r requirements.txt` and `uv pip install -r requirements.txt`
 - Go to the Cerberus folder (the location of the entire script). Then run `uv run cerberus.py`
 
 ## Project Background, Development Details, Rationale of Design
