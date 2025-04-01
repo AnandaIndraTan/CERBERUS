@@ -17,7 +17,8 @@ The project is open-source and welcome for community development.
 ## How to Start?
 - First, modify the config.toml, set all the parameters. Everything under LLM, Embedding, and Suite_config is required
 - Configure a credential.json with the following structure:
-  <img width="100" alt="Screenshot 2025-04-01 at 4 22 46 PM" src="https://github.com/user-attachments/assets/711ade29-ec78-4e9f-8aa4-5e3be5e8935b" />
+  </br>
+  <img width="400" alt="Screenshot 2025-04-01 at 4 22 46 PM" src="https://github.com/user-attachments/assets/711ade29-ec78-4e9f-8aa4-5e3be5e8935b" />
 - Then, run the following
   `uv add -r requirements.txt`
   `uv pip install -r requirements.txt`
