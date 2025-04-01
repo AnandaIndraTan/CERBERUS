@@ -2,7 +2,7 @@
 The project name is inspired by the Ancient Greek Mythology, Cerberus. It was told that Cerberus is the multi-headed dog of Hades that guards the gate of Hell to prevent the dead from leaving. This project, aims to embody the myth in the realm of Cybersecurity, where the primary objective is to make system vulnerabilities spotted (k̑érberos), ensuring no known vulnerabilities leave into the world and causing havoc.
 
 ## About The Project
-Cerberus is a penetration testing agent that leverages multi-agent LLM architecture to perform simulated red team operations. The automation for penetration testing is largely inspired by the "Cyber Kill Chain" attack framework developed by Lockheed Martin in 2017. Motivated by the critical need for affordable cybersecurity solutions as digitalization accelerates, Cerberus aims to make security testing accessible to small businesses. Through realistic attack emulation, the system efficiently identifies known vulnerabilities, enabling organizations to implement targeted fixes that effectively deter lower-skilled attackers (Script Kiddies/Novice Hackers) from successfully compromising their infrastructure.
+Cerberus is a penetration testing agent that leverages multi-agent LLM architecture to perform simulated red team operations. The automation for penetration testing is largely inspired by the "Cyber Kill Chain" attack framework developed by Lockheed Martin in 2017. Motivated by the critical need for affordable cybersecurity solutions as digitalization accelerates, Cerberus aims to make security testing accessible to small businesses. Through realistic attack emulation, the system efficiently identifies known vulnerabilities, enabling organizations to implement targeted fixes that effectively deter Script Kiddies/Novice Hackers from successfully compromising their infrastructure.
  
 Cerberus was initiated by Ananda Indra Tan as Final Year Project during the study in City University of Hong Kong. The project is open-source and welcome for community development.
 
@@ -23,7 +23,17 @@ Cerberus was initiated by Ananda Indra Tan as Final Year Project during the stud
 - Then, run `uv add -r requirements.txt` and `uv pip install -r requirements.txt`
 - Go to the Cerberus folder (the location of the entire script). Then run `uv run cerberus.py`
 
-## Project Background, Development Details, Rationale of Design
+## Development Details, Rationale of Design
+From a general perspective, Cerberus is implemented to utilise Multi-Agent LLM architecture as a “divide and conquer” mechanism to assess a target, where each agent is specialised in a specific tool. Then, simulating a formal penetration testing service, Cerberus will generate a
+comprehensive report in compliance to OWASP Top 10 standard, providing potential attack vectors (i.e., “How would someone attack a system") and mitigation advice to affected threat surfaces (Where would someone execute the relevant attack vector).This part utilises Knowledge Augmented Generation (KAG) methodology to ensure accuracy.
+
+The High Level Design for Cerberus v-Alpha:
+</br>
+</br>
+<img width="626" alt="Screenshot 2025-04-01 at 6 10 11 PM" src="https://github.com/user-attachments/assets/8a1bc85a-7753-4005-a16e-7f941712b0b1" />
+</br>
+
+
 
 ## Current Capability, Advantage/Disadvantage, Room of Improvement
 
