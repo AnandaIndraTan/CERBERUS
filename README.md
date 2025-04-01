@@ -11,7 +11,7 @@ Cerberus was initiated by Ananda Indra Tan as Final Year Project during the stud
 - Python 3.12.2
 - UV Package Manager, installation can be seen in https://docs.astral.sh/uv/getting-started/installation/
 - Linux Environment or MacOS
-- Subscribe to LLM Model and Embedding.
+- Subscribe to LLM Model and Embedding.</br>
 **The current prebuilt support is limited to OpenAI (including DeepSeek) and Mistral for models. Then, Jina and Mistral for Embeddings. However, you are more than welcome to add the mapping in the self.mapping_model in HealthCheck.py
 
 ## How to Start?
