@@ -1,7 +1,10 @@
 # Project CERBERUS (v-Alpha)
 The project name is inspired by the Ancient Greek Mythology, Cerberus. It was told that Cerberus is the multi-headed dog of Hades that guards the gate of Hell to prevent the dead from leaving. This project, aims to embody the myth in the realm of Cybersecurity, where the primary objective is to make system vulnerabilities spotted (k̑érberos), ensuring no known vulnerabilities leave into the world and causing havoc.
-
+</br>
+</br>
 <img width="214" alt="Screenshot 2025-04-06 at 5 41 04 PM" src="https://github.com/user-attachments/assets/4aa72235-10a8-445d-a0ae-994d2f831346" />
+</br>
+</br>
 
 
 ## About The Project
@@ -39,7 +42,9 @@ The High Level Design for Cerberus v-Alpha:
 
 The project uses LLM-MA to mimic a real-life typical cybersecurity team workflow, where each team member has each specialty. Then, consolidating results into a report. This approach is mainly motivated by my personal experience working and observing in corporate level cybersecurity team where there is no simply one-man-army operation to find out a hollistic view of an entire system. Plus, from the approaches I saw previously implemented, most assuming a single model to tackle assessment of a whole big system. Therefore, this design serves as well as a different perspective into solving the very same problem.
 </br>
+</br>
 <img width="613" alt="Screenshot 2025-04-06 at 5 38 49 PM" src="https://github.com/user-attachments/assets/4c2d8713-cee4-4322-a852-6fc224c25632" />
+</br>
 </br>
 Secondly, as a benchmark to the similar project that is using LLM to perform pen-testing. The author (Gelei et al., 2023) of PentestGPT mentioned some issues related to what is known as "Critical Forgetting" (CF) and "Lost in the Middle" in LLM. The idea of both problems essentially highlight the limitations possessed by the LLM itself, where it struggles to maintain long context and thus, forgetting information. The difference of two problems lies on the approaches. CF happens when user continuously finetune the context (i.e., whn you are using chatbot, you might keep adding requirements), then "Lost in the Middle" happens on several retrieval usecase when user dump a large sum of info (i.e., in cybersecurity usecase, think of the large output from Nikto or Bruteforce tools, such as Dirb).
 
@@ -72,7 +77,7 @@ The project is currently in the Alpha stage, focusing on establishing core recon
 
 Cerberus at this point is good for general scanning and reconnaissance. The mechanisms and rationale of my design works in general (which is good, means the project is in right track). However, one of the highlights that I always discover is that general knowledge LLMs and the Coders are quite bad at using hacking tools, especially those that are not generally known by people outside of Cybersecurity Field (e.g., sqlmap, Gobuster, etc). Therefore, the accuracy lack-off mainly due to the questionnable tool usage/parameters generated (i.e., Models sometimes confuses Nikto -T as timeout instead of Tuning). 
 
-However, despite those limitations, the mechanism and accuracy is still acceptable, noting that the phase is just to do reconnaissance and discovery, which means any result that needs confirmation (delivery and exploitation) is still out of scope. For the test purposes, using **Nikto** **only** on juiceshop-heroku.com, Cerberus can identify 9/14 potential vulnerabilities across injections, misconfigurations, and XSS. Compared to the ideal identifiable by only using Nikto, that is up to 90% itself (the other 5 requires burpsuite or other tools to confirm). So in general, I would say finetuning is much needed.
+However, despite those limitations, the mechanism and accuracy is still acceptable, noting that the phase is just to do reconnaissance and discovery, which means any result that needs confirmation (delivery and exploitation) is still out of scope. For the test purposes, using **Nikto** **only** on juiceshop-heroku.com, Cerberus can confirm 3 vulnerabilities and identify the locations of 9/14 potential vulnerabilities across injections, misconfigurations, and XSS. Compared to the ideal identifiable by only using Nikto, that is up to 90% successful detection itself (the other 5 requires other tools or code analysis to confirm).
 </br>
 </br>
 <img width="622" alt="Screenshot 2025-04-06 at 5 36 46 PM" src="https://github.com/user-attachments/assets/445a6fe3-3d31-4f22-b8a8-0db46e28a230" />
